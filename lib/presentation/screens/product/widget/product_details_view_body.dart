@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce_app/core/theme/styles.dart';
 import 'package:e_commerce_app/infrastructure/models/product_model.dart';
 import 'package:flutter/material.dart';
 
-class ProductDeatailsViewBody extends StatelessWidget {
-  const ProductDeatailsViewBody({super.key, required this.productModel});
+class ProductDetailsViewBody extends StatelessWidget {
+  const ProductDetailsViewBody({super.key, required this.productModel});
 
   final ProductModel productModel;
 
@@ -22,57 +21,61 @@ class ProductDeatailsViewBody extends StatelessWidget {
               height: 260,
               fit: BoxFit.cover,
               imageUrl: productModel.coverPictureUrl ?? '',
+              placeholder: (context, url) =>
+                  Container(color: Colors.grey.shade200),
               errorWidget: (context, url, error) => Container(
                 color: Colors.grey.shade200,
                 child: const Icon(Icons.image_not_supported_outlined),
               ),
             ),
           ),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           Text(
             productModel.name ?? '',
-            style: Styles.textStyel21(
-              context,
-            ).copyWith(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
           ),
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           Text(
             '${productModel.price?.toStringAsFixed(2) ?? '0.00'} \$',
-            style: Styles.textStyel21(
-              context,
-            ).copyWith(color: Colors.teal, fontWeight: FontWeight.w700),
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: Colors.teal,
+            ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             'PDC ${productModel.productCode ?? ''}',
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
           ),
-          SizedBox(height: 20),
-          Text(
+          const SizedBox(height: 20),
+          const Text(
             'Description',
-            style: Styles.textStyel19(
-              context,
-            ).copyWith(fontWeight: FontWeight.w700),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             productModel.description?.isNotEmpty == true
                 ? productModel.description!
                 : 'No description available.',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 14.5, height: 1.6),
           ),
-          SizedBox(height: 28),
+          const SizedBox(height: 28),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('this item added to cart')),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Text('Add to Cart', style: TextStyle(fontSize: 18)),
+              child: const Text('Add to Cart'),
             ),
           ),
         ],

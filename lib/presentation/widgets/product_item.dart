@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce_app/core/constants/constant.dart';
 import 'package:e_commerce_app/infrastructure/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,11 +12,11 @@ class ProductItem extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(14),
       onTap: () {
-        context.push('/product_details_view', extra: productModel);
+        context.push('/product_details_view/${productModel.id}');
       },
       child: Container(
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: Colors.grey.shade300),
         ),
@@ -30,6 +29,8 @@ class ProductItem extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: productModel.coverPictureUrl ?? '',
                 fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    Container(color: Colors.grey.shade200),
                 errorWidget: (context, url, error) => Container(
                   color: Colors.grey.shade200,
                   child: const Icon(Icons.image_not_supported_outlined),
@@ -45,12 +46,15 @@ class ProductItem extends StatelessWidget {
                     productModel.name ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   Text(
                     '${productModel.price?.toStringAsFixed(2) ?? '0.00'} \$',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       color: Colors.teal,
