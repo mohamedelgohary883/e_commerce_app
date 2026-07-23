@@ -1,7 +1,10 @@
 import 'package:e_commerce_app/app/service_locator/injection_container.dart';
 import 'package:e_commerce_app/presentation/cubit/product_deatils_cubit/product_details_cubit.dart';
+import 'package:e_commerce_app/presentation/screens/cart/cart_view.dart';
 import 'package:e_commerce_app/presentation/screens/home/home_view.dart';
+import 'package:e_commerce_app/presentation/screens/main/main_view.dart';
 import 'package:e_commerce_app/presentation/screens/product/product_details_view.dart';
+import 'package:e_commerce_app/presentation/screens/setting/setting_view.dart';
 import 'package:e_commerce_app/presentation/screens/sign_in/sign_in_view.dart';
 import 'package:e_commerce_app/presentation/screens/sign_up/sign_up_view.dart';
 import 'package:e_commerce_app/presentation/screens/verify_email/verify_email_view.dart';
@@ -31,12 +34,6 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: '/home_view',
-        builder: (context, state) {
-          return const HomeView();
-        },
-      ),
-      GoRoute(
         path: '/product_details_view/:id',
         builder: (context, state) {
           final id = state.pathParameters['id']!;
@@ -46,6 +43,37 @@ class AppRouter {
             child: const ProductDetailsView(),
           );
         },
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainView(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/home_view',
+                builder: (context, state) => const HomeView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/cart_view',
+                builder: (context, state) => const CartView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/settings_view',
+                builder: (context, state) => const SettingView(),
+              ),
+            ],
+          ),
+        ],
       ),
     ],
   );

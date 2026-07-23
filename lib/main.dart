@@ -1,11 +1,10 @@
-import 'package:e_commerce_app/app/service_locator/injection_container.dart'
-    as di;
 import 'package:e_commerce_app/app/routes/app_routing.dart';
+import 'package:e_commerce_app/app/service_locator/injection_container.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
+  await init();
   runApp(const ECommerceApp());
 }
 
